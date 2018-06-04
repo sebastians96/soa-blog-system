@@ -3,7 +3,32 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{970DD47B-3BD4-49D4-9CAC-8959F18D18FC}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication-Service", "Authentication-Service\Authentication-Service.csproj", "{39FE7312-F822-42A3-BEF5-E5A993F2BBA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin-Panel-Service", "Admin-Panel-Service\Admin-Panel-Service.csproj", "{1664FE83-EF5F-4247-BC24-B33EA4D25227}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{39FE7312-F822-42A3-BEF5-E5A993F2BBA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39FE7312-F822-42A3-BEF5-E5A993F2BBA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39FE7312-F822-42A3-BEF5-E5A993F2BBA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39FE7312-F822-42A3-BEF5-E5A993F2BBA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1664FE83-EF5F-4247-BC24-B33EA4D25227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1664FE83-EF5F-4247-BC24-B33EA4D25227}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1664FE83-EF5F-4247-BC24-B33EA4D25227}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1664FE83-EF5F-4247-BC24-B33EA4D25227}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
