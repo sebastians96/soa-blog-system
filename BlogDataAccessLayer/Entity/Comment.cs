@@ -20,8 +20,8 @@ namespace BlogDataAccessLayer.Entity
 
         public string Content { get; set; }
 
-        [ForeignKey("Post")]
         public Post Post { get; set; }
+
         
     }
 }
