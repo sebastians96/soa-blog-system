@@ -31,10 +31,13 @@ namespace BlogDataAccessLayer.Context
         {
             modelBuilder.Entity<Comment>()
                 .HasRequired(m => m.Post);
-
+            
             base.OnModelCreating(modelBuilder);
         }
 
-
+        public int SaveChanges()
+        {
+            return base.SaveChanges();
+        }
     }
 }
