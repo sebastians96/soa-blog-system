@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Authentication-Service</name>
+    </assembly>
+    <members>
+        <member name="T:Authentication_Service.Controllers.UserController">
+            <summary>
+            User Controller allowing users to register and log in.
+            </summary>
+        </member>
+        <member name="M:Authentication_Service.Controllers.UserController.Register(Newtonsoft.Json.Linq.JObject)">
+            <summary>
+            This function is registering new users.
+            </summary>
+            <remarks>It reads the request from json object, checks if the user does not already exist in LiteDB and creates new entry.</remarks>
+            <param name="json"></param>
+            <returns>Json containing id and status of the user if the user has been succesfully registered or json with id -1 if user already exist or something went wrong.</returns>
+        </member>
+        <member name="M:Authentication_Service.Controllers.UserController.Login(Newtonsoft.Json.Linq.JObject)">
+            <summary>
+            This function allows to check if user exist when logging in.
+            </summary>
+            <remarks>It reads the requst from the json object checks if user exist in LiteDB and if the password is correct and then returns user id and status.</remarks>
+            <param name="json"></param>
+            <returns>Json with user id and status if logging in has been succesfull or otherwise json with id -1.</returns>
+        </member>
+        <member name="T:Authentication_Service.Models.Request">
+            <summary>
+            Request that is used in parsing json in the User Controller.
+            </summary>
+        </member>
+        <member name="T:Authentication_Service.Models.User">
+            <summary>
+            Model that is used in LiteDB.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -11,14 +11,19 @@ using Newtonsoft.Json;
 
 namespace AdminPanel_Service.Controllers
 {
+    /// <summary>
+    /// Class providing actions for the administrator to update and delete users.
+    /// </summary>
     [RoutePrefix("user")]
     public class UserController : ApiController
     {
+        NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         LiteDatabase db = new LiteDatabase(@"C:\database.db");
         [Route("")]
         [HttpGet]
         public JArray Get()
         {
+            logger.Info("Get request received - returning the list of all users in the database...");
             var col = db.GetCollection<User>();
             JArray response = new JArray();
             List<User> list = col.FindAll().ToList<User>();
@@ -26,14 +31,15 @@ namespace AdminPanel_Service.Controllers
             {
                 response.Add((JObject)JsonConvert.DeserializeObject("{ \"id\": " + u.id + ", \"username\": \"" + u.username + "\", \"status\": \"" + u.status + "\" }"));
             }
-            //var tmp = new { users = list };
-            return response;//JObject.Parse(JsonConvert.SerializeObject(tmp));//JsonConvert.SerializeObject(list, Formatting.Indented);
+            logger.Info("Returning all users succesfully performed!");
+            return response;
         }
 
         [Route("delete")]
         [HttpPost]
         public IHttpActionResult Delete(JObject json)
         {
+            logger.Info("Delete post request received - attempting to delete the user...");
             DeleteRequest request = json.ToObject<DeleteRequest>();
             var col = db.GetCollection<User>();
             if (col.FindById(request.id).status == "admin")
@@ -41,13 +47,16 @@ namespace AdminPanel_Service.Controllers
                 if (col.FindById(request.delete)!=null)
                 {
                     col.Delete(request.delete);
+                    logger.Info("User has been succesfully deleted.");
                     return Ok("User has been deleted!");
                 }
                 else
                 {
+                    logger.Info("User not found in the database.");
                     return BadRequest("There is no user with this id in the database!");
                 }
             }
+            logger.Info("User has not been deleted from the database due to insufficient permission.");
             return BadRequest("You don't have sufficient rights to delete the user!");
         }
 
@@ -55,6 +64,7 @@ namespace AdminPanel_Service.Controllers
         [HttpPost]
         public IHttpActionResult Update(JObject json)
         {
+            logger.Info("Update post request received - attempting to update user...");
             UpdateRequest request = json.ToObject<UpdateRequest>();
             var col = db.GetCollection<User>();
             if (col.FindById(request.id).status == "admin")
@@ -64,13 +74,16 @@ namespace AdminPanel_Service.Controllers
                     User tmp = col.FindById(request.update);
                     tmp.status = request.status;
                     col.Update(request.update, tmp);
+                    logger.Info("User status succesfully updated.");
                     return Ok("User status has been updated!");
                 }
                 else
                 {
+                    logger.Info("User not found in the database.");
                     return BadRequest("There is no user with this id in the database!");
                 }
             }
+            logger.Info("User has not been updated in the database due to insufficient permission.");
             return BadRequest("You don't have sufficient rights to change status of the user!");
         }
     }

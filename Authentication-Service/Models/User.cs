@@ -5,6 +5,9 @@ using System.Web;
 
 namespace Authentication_Service.Models
 {
+    /// <summary>
+    /// Model that is used in LiteDB.
+    /// </summary>
     public class User
     {
         public int id { get; set; }
