@@ -15,7 +15,7 @@ namespace Authentication_Service.Controllers
 {
     public class UserController : ApiController
     {
-        LiteDatabase db = new LiteDatabase(@".\database.db");
+        LiteDatabase db = new LiteDatabase(@"C:\database.db");
         [Route("register")]
         [HttpPost]
         public JObject Register(JObject json)
