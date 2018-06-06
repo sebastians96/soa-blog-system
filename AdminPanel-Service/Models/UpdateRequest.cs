@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Authentication_Service.Models
+namespace AdminPanel_Service.Models
 {
     /// <summary>
-    /// Model that is used in LiteDB.
+    /// Model of the Update Request that is used by User Controller.
     /// </summary>
-    public class User
+    public class UpdateRequest
     {
         public int id { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
+        public int update { get; set; }
         public string status { get; set; }
     }
 }
