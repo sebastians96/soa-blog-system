@@ -25,7 +25,7 @@ namespace Authentication_Service.Tests
             // Act
             LiteDatabase db = new LiteDatabase(@"C:\database.db");
             var col = db.GetCollection<User>();
-            if(col.Exists(Query.EQ("username","test"))) col.Delete(Query.EQ("username", "test"));
+            col.Delete(Query.EQ("username", "test"));
             var response = controller.Register(JObject.Parse("{\"username\": \"test\", \"password\": \"test\", \"status\": \"user\"}"));
 
             // Assert
@@ -42,7 +42,7 @@ namespace Authentication_Service.Tests
             // Act
             LiteDatabase db = new LiteDatabase(@"C:\database.db");
             var col = db.GetCollection<User>();
-            if (!col.Exists(Query.EQ("username", "test"))) col.Insert(new User { username="test",password="test",status="user",id=0 });
+            col.Insert(new User { username="test",password="test",status="user",id=0 });
             var response = controller.Register(JObject.Parse("{\"username\": \"test\", \"password\": \"test\", \"status\": \"user\"}"));
 
             // Assert
@@ -101,7 +101,7 @@ namespace Authentication_Service.Tests
             // Act
             LiteDatabase db = new LiteDatabase(@"C:\database.db");
             var col = db.GetCollection<User>();
-            if (!col.Exists(Query.EQ("username", "test"))) col.Insert(new User { username = "test", password = "test", status = "user", id = 0 });
+            col.Insert(new User { username = "test", password = "test", status = "user", id = 0 });
             var response = controller.Login(JObject.Parse("{\"username\": \"test\", \"password\": \"test\"}"));
 
             // Assert
