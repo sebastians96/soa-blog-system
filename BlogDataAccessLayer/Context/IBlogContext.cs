@@ -1,5 +1,4 @@
-﻿
-using BlogDataAccessLayer.Entity;
+﻿using BlogDataAccessLayer.Entity;
 using System.Data.Entity;
 
 
@@ -11,5 +10,6 @@ namespace BlogDataAccessLayer.Context
         DbSet<Comment> Comments { get; set; }
         DbSet<Post> Posts { get; set; }
 
+        int SaveChanges();
     }
 }

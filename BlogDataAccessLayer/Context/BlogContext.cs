@@ -1,5 +1,4 @@
-﻿
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using BlogDataAccessLayer.Entity;
 using BlogDataAccessLayer.Initializer;
 
@@ -29,12 +28,12 @@ namespace BlogDataAccessLayer.Context
         /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Comment>()
-                .HasRequired(m => m.Post);
-
             base.OnModelCreating(modelBuilder);
         }
 
-
+        public int SaveChanges()
+        {
+            return base.SaveChanges();
+        }
     }
 }
