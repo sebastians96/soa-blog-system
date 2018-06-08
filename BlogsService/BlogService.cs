@@ -63,10 +63,46 @@ namespace BlogsService
             public int PostID { get; set; }
         }
 
+        // Posts
 
+        public string AddPost(PostWCF post)
+        {
+            var postDB = new Post() { User = post.User, Content = post.Content, Date = post.Date };
+            _blogContext.Posts.Add(postDB);
+            _blogContext.SaveChanges();
+            return "Post added";
+        }
 
-        //// Posts
+        public List<Post> GetAllPosts()
+        {
+            return _blogContext.Posts.ToList();
+        }
 
+        public Post GetPostById(int id)
+        {
+            return _blogContext.Posts.ToList().Find(c => c.PostID == id);
+        }
 
+        public Post DeletePost(int id)
+        {
+            var itemToDelete = _blogContext.Posts.ToList().Find(c => c.PostID == id);
+            if (itemToDelete == null) return null;
+            _blogContext.Posts.Remove(itemToDelete);
+            _blogContext.SaveChanges();
+            return itemToDelete;
+        }
+
+        [DataContract]
+        public class PostWCF
+        {
+            [DataMember]
+            public string User { get; set; }
+            [DataMember]
+            public string Date { get; set; }
+            [DataMember]
+            public string Content { get; set; }
+            [DataMember]
+            public int Title { get; set; }
+        }
     }
 }

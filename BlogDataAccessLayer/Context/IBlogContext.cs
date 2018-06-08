@@ -1,5 +1,4 @@
-﻿
-using BlogDataAccessLayer.Entity;
+﻿using BlogDataAccessLayer.Entity;
 using System.Data.Entity;
 
 
