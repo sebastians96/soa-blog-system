@@ -24,7 +24,7 @@ namespace BlogsService
             if (post == null) return "Error there is no such PostId";
             else
             {
-                var commentDB = new Comment() { User = comment.User, Date = comment.Date, PostID = comment.PostID };
+                var commentDB = new Comment() { User = comment.User, Content = comment.Content, Date = comment.Date, PostID = comment.PostID };
                 _blogContext.Comments.Add(commentDB);
                 _blogContext.SaveChanges();
                 return "Comment added";
