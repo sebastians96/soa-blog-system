@@ -11,17 +11,16 @@ namespace BlogDataAccessLayer.Entity
     public class Comment
     {
         [Key]
-        public int Id { get; set; }
+        public int CommentID { get; set; }
 
         [StringLength(50, ErrorMessage = "Must be between 1 and 50 characters long", MinimumLength = 1)]
         public string User { get; set; }
 
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
         public string Content { get; set; }
 
-        public Post Post { get; set; }
-
+        public int PostID { get; set; }
         
     }
 }

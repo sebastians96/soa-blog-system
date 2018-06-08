@@ -2,6 +2,7 @@
 using BlogDataAccessLayer.Entity;
 using System.Data.Entity;
 using System;
+using System.Collections.Generic;
 
 namespace BlogDataAccessLayer.Initializer
 {
@@ -18,24 +19,24 @@ namespace BlogDataAccessLayer.Initializer
 
             var post1 = new Post()
             {
-                Id = 1,
+                PostID = 1,
                 Content = "Jestem dzik i jem ile moge",
-                Date = new DateTime(2018, 6, 5),
-                User = "KacpSzalw", 
+                Date = "2018-07-08",
+                User = "KacpSzalw",
                 Title = "Odżywianie - Kacper Szalwa"
             };
-            context.Posts.Add(post1);
 
             var comment1 = new Comment()
             {
-                Id = 1,
+                CommentID = 1,
                 Content = "Kacper dobra robota!",
-                Date = new DateTime(2018, 6, 5),
-                Post = post1,
-                User = "SienMich"
+                Date = "2018-07-08",
+                User = "SienMich",
+                PostID = 1
             };
-            context.Comments.Add(comment1);
 
+            context.Posts.Add(post1);
+            context.Comments.Add(comment1);
             base.Seed(context);
         }
     }
