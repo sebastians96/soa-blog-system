@@ -36,19 +36,6 @@ namespace BlogsService
 
         // Posts
 
-        //[OperationContract]
-        //List<Post> GetAllPosts();
 
-        //[OperationContract]
-        //Post GetPostById(int Id);
-
-        //[OperationContract]
-        //void AddPost(Post post);
-
-        //[OperationContract]
-        //Post UpdatePost(int Id);
-
-        //[OperationContract]
-        //void DeletePost(int Id);
     }
 }

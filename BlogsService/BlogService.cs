@@ -67,30 +67,6 @@ namespace BlogsService
 
         //// Posts
 
-        // public void AddPost(Post post)
-        // {
-        //     _blogContext.Posts.Add(post);
-        //     _blogContext.SaveChanges();
-        // }
 
-        // public void DeletePost(int Id)
-        // {
-        //     throw new NotImplementedException();
-        // }
-
-        // public List<Post> GetAllPosts()
-        // {
-        //     return _blogContext.Posts.ToList();
-        // }
-
-        // public Post GetPostById(int Id)
-        // {
-        //     return _blogContext.Posts.ToList().Find(c => c.Id == Id);
-        // }
-
-        // public Post UpdatePost(int Id)
-        // {
-        //     throw new NotImplementedException();
-        // }
     }
 }
