@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AdminPanel-Service</name>
+    </assembly>
+    <members>
+        <member name="T:AdminPanel_Service.Controllers.UserController">
+            <summary>
+            Class providing actions for the administrator to update and delete users.
+            </summary>
+        </member>
+        <member name="T:AdminPanel_Service.Models.DeleteRequest">
+            <summary>
+            Model of Delete Request that is used by User Controller.
+            </summary>
+        </member>
+        <member name="T:AdminPanel_Service.Models.UpdateRequest">
+            <summary>
+            Model of the Update Request that is used by User Controller.
+            </summary>
+        </member>
+        <member name="T:AdminPanel_Service.Models.User">
+            <summary>
+            Model that is used in LiteDB.
+            </summary>
+        </member>
+    </members>
+</doc>
