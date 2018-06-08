@@ -29,6 +29,9 @@ namespace BlogDataAccessLayer.Context
         /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Comment>()
+                .HasRequired(m => m.Post);
+            
             base.OnModelCreating(modelBuilder);
         }
 
