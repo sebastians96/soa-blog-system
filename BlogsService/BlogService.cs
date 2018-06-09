@@ -10,6 +10,7 @@ namespace BlogsService
     public class BlogService : IBlogService
     {
         private readonly IBlogContext _blogContext;
+        NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public BlogService()
         {
@@ -20,33 +21,48 @@ namespace BlogsService
 
         public string AddComment(CommentWCF comment)
         {
+            logger.Info("Registeres POST request - attempting to add new comment.");
             var post = _blogContext.Posts.ToList().Find(p => p.PostID == comment.PostID);
-            if (post == null) return "Error there is no such PostId";
+            if (post == null)
+            {
+                logger.Warn("Cannot add comment - There is no such PostID.");
+                return "Error there is no such PostId.";
+            }
             else
             {
                 var commentDB = new Comment() { User = comment.User, Content = comment.Content, Date = comment.Date, PostID = comment.PostID };
                 _blogContext.Comments.Add(commentDB);
                 _blogContext.SaveChanges();
-                return "Comment added";
+
+                logger.Info("New comment added.");
+                return "Comment added.";
             }
         }
 
         public List<Comment> GetAllComments()
         {
+            logger.Info("Registered GET request - returning all comments.");
             return _blogContext.Comments.ToList();
         }
 
         public Comment GetCommentById(int id)
         {
+            logger.Info("Registered GET request - returning comment with id:{1}",id);
             return _blogContext.Comments.ToList().Find(c => c.CommentID == id);
         }
 
         public Comment DeleteComment(int id)
         {
+            logger.Info("Registered DELETE request - attempting to delete comment with id:{1}", id);
             var itemToDelete = _blogContext.Comments.ToList().Find(c => c.CommentID == id);
-            if (itemToDelete == null) return null;
+            if (itemToDelete == null)
+            {
+                logger.Warn("Cannot delete comment with id:{1} - there is no such comment", id);
+                return null;
+            }
             _blogContext.Comments.Remove(itemToDelete);
             _blogContext.SaveChanges();
+            logger.Info("Comment deleted");
             return itemToDelete;
         }
 
