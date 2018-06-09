@@ -13,7 +13,7 @@ namespace BlogDataAccessLayer.Context
         public virtual DbSet<Post> Posts { get; set; }
 
         /// <summary>
-        /// Constructor
+        /// Constructor with connection string passed to base context
         /// </summary>
         public BlogContext() : base("Server=LENOVO-PC\\SIENMICH;Database=blog;User Id=root;Password=root;")
         {
@@ -31,6 +31,10 @@ namespace BlogDataAccessLayer.Context
             base.OnModelCreating(modelBuilder);
         }
 
+        /// <summary>
+        /// Function that saves context
+        /// </summary>
+        /// <returns></returns>
         public int SaveChanges()
         {
             return base.SaveChanges();

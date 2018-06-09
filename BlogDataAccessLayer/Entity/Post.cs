@@ -7,6 +7,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BlogDataAccessLayer.Entity
 {
+    /// <summary>
+    /// Entity model for Posts
+    /// </summary>
     [Serializable]
     [Table("Posts")]
     public class Post

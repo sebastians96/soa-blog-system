@@ -6,6 +6,9 @@ using System.Collections.Generic;
 
 namespace BlogDataAccessLayer.Initializer
 {
+    /// <summary>
+    /// Database initializer for blog db. 
+    /// </summary>
     class BlogInitializer : DropCreateDatabaseAlways<BlogContext>
     {
         public override void InitializeDatabase(BlogContext context)
@@ -14,6 +17,10 @@ namespace BlogDataAccessLayer.Initializer
             base.InitializeDatabase(context);
         }
 
+        /// <summary>
+        /// Seed db with basic data
+        /// </summary>
+        /// <param name="context"></param>
         protected override void Seed(BlogContext context)
         {
 

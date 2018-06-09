@@ -6,6 +6,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BlogDataAccessLayer.Entity
 {
+    /// <summary>
+    /// Entity model for table Comments
+    /// </summary>
     [Serializable]
     [Table("Comments")]
     public class Comment

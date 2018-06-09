@@ -4,6 +4,9 @@ using System.Data.Entity;
 
 namespace BlogDataAccessLayer.Context
 {
+    /// <summary>
+    /// Interface for BlogContext with defined DbSets
+    /// </summary>
     public interface IBlogContext
     {
 
