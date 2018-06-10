@@ -24,7 +24,7 @@ namespace Authentication_Service.Tests
             controller.Configuration = new HttpConfiguration();
 
             // Act
-            LiteDatabase db = new LiteDatabase(@"C:\test_database.db");
+            LiteDatabase db = database;
             var col = db.GetCollection<User>();
             col.Delete(Query.EQ("username", "test"));
             var response = controller.Register(JObject.Parse("{\"username\": \"test\", \"password\": \"test\", \"status\": \"user\"}"));
@@ -41,7 +41,7 @@ namespace Authentication_Service.Tests
             controller.Configuration = new HttpConfiguration();
 
             // Act
-            LiteDatabase db = new LiteDatabase(@"C:\test_database.db");
+            LiteDatabase db = database;
             var col = db.GetCollection<User>();
             col.Insert(new User { username="test",password="test",status="user",id=0 });
             var response = controller.Register(JObject.Parse("{\"username\": \"test\", \"password\": \"test\", \"status\": \"user\"}"));
@@ -100,7 +100,7 @@ namespace Authentication_Service.Tests
             controller.Configuration = new HttpConfiguration();
 
             // Act
-            LiteDatabase db = new LiteDatabase(@"C:\test_database.db");
+            LiteDatabase db = database;
             var col = db.GetCollection<User>();
             col.Insert(new User { username = "test", password = "test", status = "user", id = 0 });
             var response = controller.Login(JObject.Parse("{\"username\": \"test\", \"password\": \"test\"}"));
@@ -117,7 +117,7 @@ namespace Authentication_Service.Tests
             controller.Configuration = new HttpConfiguration();
 
             // Act
-            LiteDatabase db = new LiteDatabase(@"C:\test_database.db");
+            LiteDatabase db = database;
             var col = db.GetCollection<User>();
             col.Delete(Query.EQ("username", "test"));
             var response = controller.Login(JObject.Parse("{\"username\": \"test\", \"password\": \"test\"}"));
@@ -134,7 +134,7 @@ namespace Authentication_Service.Tests
             controller.Configuration = new HttpConfiguration();
 
             // Act
-            LiteDatabase db = new LiteDatabase(@"C:\test_database.db");
+            LiteDatabase db = database;
             var col = db.GetCollection<User>();
             col.Delete(Query.EQ("username", "test"));
             var response = controller.Login(JObject.Parse("{\"username\": \"test\"}"));
@@ -151,7 +151,7 @@ namespace Authentication_Service.Tests
             controller.Configuration = new HttpConfiguration();
 
             // Act
-            LiteDatabase db = new LiteDatabase(@"C:\test_database.db");
+            LiteDatabase db = database;
             var col = db.GetCollection<User>();
             col.Insert(new User { username = "test", password = "test", status = "user", id = 0 });
             var response = controller.Login(JObject.Parse("{\"username\": \"test\"}"));

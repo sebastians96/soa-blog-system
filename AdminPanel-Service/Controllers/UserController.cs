@@ -18,7 +18,16 @@ namespace AdminPanel_Service.Controllers
     public class UserController : ApiController
     {
         NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-        LiteDatabase db = new LiteDatabase(@"C:\database.db");
+        LiteDatabase db;
+        public UserController()
+        {
+            db = new LiteDatabase(@"C:\database.db");
+        }
+        public UserController(LiteDatabase database)
+        {
+            db = database;
+        }
+
         [Route("")]
         [HttpGet]
         public JArray Get()
