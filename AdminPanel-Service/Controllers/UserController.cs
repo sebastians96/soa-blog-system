@@ -39,7 +39,7 @@ namespace AdminPanel_Service.Controllers
         [HttpPost]
         public IHttpActionResult Delete(JObject json)
         {
-            logger.Info("Delete post request received - attempting to delete the user...");
+            logger.Info("Delete user request received - attempting to delete the user...");
             DeleteRequest request = json.ToObject<DeleteRequest>();
             var col = db.GetCollection<User>();
             if (col.FindById(request.id).status == "admin")
@@ -64,7 +64,7 @@ namespace AdminPanel_Service.Controllers
         [HttpPost]
         public IHttpActionResult Update(JObject json)
         {
-            logger.Info("Update post request received - attempting to update user...");
+            logger.Info("Update userequest received - attempting to update user...");
             UpdateRequest request = json.ToObject<UpdateRequest>();
             var col = db.GetCollection<User>();
             if (col.FindById(request.id).status == "admin")

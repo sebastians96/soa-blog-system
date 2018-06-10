@@ -4,6 +4,11 @@
         <name>AdminPanel-Service</name>
     </assembly>
     <members>
+        <member name="T:AdminPanel_Service.Controllers.PostController">
+            <summary>
+            Class providing action for administrator to delete and get posts.
+            </summary>
+        </member>
         <member name="T:AdminPanel_Service.Controllers.UserController">
             <summary>
             Class providing actions for the administrator to update and delete users.
