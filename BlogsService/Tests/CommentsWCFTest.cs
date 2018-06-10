@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using BlogDataAccessLayer.Context;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,36 +11,52 @@ namespace BlogsService.Tests
     [TestFixture]
     public class CommentsWCFTest
     {
-        private BlogService _blogService;
+        private readonly BlogService _blogService;
+        private readonly IBlogContext _blogContext;
 
         public CommentsWCFTest()
         {
             this._blogService = new BlogService();
+            this._blogContext = new BlogContext();
         }
 
         [Test]
         public void GetAllCommentsTest()
         {
-            var response = _blogService.GetAllComments();
-            Assert.NotNull(response);
+            var count1 = _blogService.GetAllComments().Count;
+            var count2 = _blogContext.Comments.Count();
+            Assert.AreEqual(count1, count2);
         }
 
         [Test]
         public void GetCommentByIDTest()
         {
-            var response = _blogService.GetCommentById(2);
-
+            var response1 = _blogService.GetCommentById(0);
+            Assert.Null(response1);
+            var response2 = _blogService.GetCommentById(1);
+            Assert.NotNull(response2);
         }
 
         [Test]
         public void PostCommentTest()
         {
-
+            var count1 = _blogContext.Comments.Count();
+            _blogService.AddComment(new BlogService.CommentWCF() { User = "Test", Content = "Test", Date = "01.02.2015", PostID = 1 });
+            var count2 = _blogContext.Comments.Count();
+            Assert.AreEqual(count1 + 1, count2);
+            var itemToDelete = _blogContext.Comments.ToList().FindAll(c => c.Content.Equals("Test"));
+            _blogContext.Comments.RemoveRange(itemToDelete);
         }
 
         [Test]
         public void DeleteCommentTest()
         {
+            _blogService.AddComment(new BlogService.CommentWCF() { User = "Test", Content = "Test", Date = "01.01.0000", PostID = 1 });
+            var itemToDelete = _blogContext.Comments.ToList().Find(c => c.Content.Equals("Test"));
+            var count1 = _blogContext.Comments.Count();
+            _blogService.DeleteComment(itemToDelete.CommentID);
+            var count2 = _blogContext.Comments.Count();
+            Assert.AreEqual(count1, count2 + 1);
 
         }
     }
