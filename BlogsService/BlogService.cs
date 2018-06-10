@@ -102,7 +102,7 @@ namespace BlogsService
             [DataMember]
             public string Content { get; set; }
             [DataMember]
-            public int Title { get; set; }
+            public string Title { get; set; }
         }
     }
 }

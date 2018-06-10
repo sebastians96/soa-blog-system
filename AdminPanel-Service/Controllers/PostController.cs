@@ -7,6 +7,8 @@ using System.Web.Http;
 using Newtonsoft.Json.Linq;
 using AdminPanel_Service.Models;
 using NLog;
+using BlogsService;
+using LiteDB;
 
 namespace AdminPanel_Service.Controllers
 {
@@ -17,38 +19,15 @@ namespace AdminPanel_Service.Controllers
     public class PostController : ApiController
     {
         NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-        [Route("")]
-        [HttpGet]
-        public JToken Get()
+        IBlogService bs = new BlogService();
+        LiteDatabase db;
+        public PostController()
         {
-            logger.Info("Get all posts request received.");
-
-            String responseString;
-            using (var client = new HttpClient())
-            {
-                responseString = client.GetStringAsync("http://localhost/Blog/GetAllPosts").ToString();
-            }
-
-            JToken response = JToken.Parse(responseString);
-            logger.Info("Returning all posts succesfully performed!");
-            return response;
+            db = new LiteDatabase(@"C:\database.db");
         }
-
-        [Route("")]
-        [HttpPost]
-        public JToken Get(JObject json)
+        public PostController(LiteDatabase database)
         {
-            logger.Info("Get all posts request received.");
-
-            String responseString;
-            using (var client = new HttpClient())
-            {
-                responseString = client.GetStringAsync("http://localhost/Blog/GetAllPosts").ToString();
-            }
-
-            JToken response = JToken.Parse(responseString);
-            logger.Info("Returning all posts succesfully performed!");
-            return response;
+            db = database;
         }
 
         [Route("delete")]
@@ -57,8 +36,14 @@ namespace AdminPanel_Service.Controllers
         {
             logger.Info("Delete post request received - attempting to delete post...");
             DeleteRequest request = json.ToObject<DeleteRequest>();
-            
 
+            var col = db.GetCollection<User>();
+            if (col.FindById(request.id).status == "admin")
+            {
+                bs.DeletePost(request.delete);
+                logger.Info("Post has been deleted!");
+                return Ok("Post has been deleted!");
+            }
 
             logger.Info("Post has not been deleted due to insufficient permission.");
             return BadRequest("You don't have sufficient rights to delete posts!");
