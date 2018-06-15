@@ -14,6 +14,7 @@ namespace BlogsService
     {
         private readonly IBlogContext _blogContext;
         private readonly UserController _userController;
+        NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public BlogService()
         {
