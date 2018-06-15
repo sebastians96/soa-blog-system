@@ -1,10 +1,13 @@
-﻿using BlogDataAccessLayer.Context;
+﻿using Authentication_Service.Controllers;
+using BlogDataAccessLayer.Context;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Authentication_Service.Models;
+using Newtonsoft.Json.Linq;
 
 namespace BlogsService.Tests
 {
@@ -13,11 +16,13 @@ namespace BlogsService.Tests
     {
         private readonly BlogService _blogService;
         private readonly IBlogContext _blogContext;
+        private readonly UserController _userController;
 
         public CommentsWCFTest()
         {
             this._blogService = new BlogService();
             this._blogContext = new BlogContext();
+            this._userController = new UserController();
         }
 
         [Test]
@@ -40,6 +45,9 @@ namespace BlogsService.Tests
         [Test]
         public void PostCommentTest()
         {
+            var responseUser = _userController.Register(JObject.Parse("{\"username\": \"Test\", \"password\": \"test\", \"status\": \"user\"}"));
+            Assert.AreNotEqual(null, responseUser["id"]);
+
             var count1 = _blogContext.Comments.Count();
             _blogService.AddComment(new BlogService.CommentWCF() { User = "Test", Content = "Test", Date = "01.02.2015", PostID = 1 });
             var count2 = _blogContext.Comments.Count();
