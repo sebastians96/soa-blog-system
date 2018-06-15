@@ -16,15 +16,16 @@ namespace AdminPanel_Service.Tests
     [TestFixture]
     public class UserControllerTests
     {
+        LiteDatabase database = new LiteDatabase(@"C:\test_database.db");
         [Test]
         public void Get()
         {
-            var controller = new UserController();
+            var controller = new UserController(database);
             controller.Request = new HttpRequestMessage();
             controller.Configuration = new HttpConfiguration();
 
             // Act
-            LiteDatabase db = new LiteDatabase(@"C:\database.db");
+            LiteDatabase db = database;
             var col = db.GetCollection<User>();
             col.Insert(new User { username = "user", password = "user", id = 0, status = "user" });
             var response = controller.Get();
@@ -35,12 +36,12 @@ namespace AdminPanel_Service.Tests
         [Test]
         public void Delete_UserDoesExist()
         {
-            var controller = new UserController();
+            var controller = new UserController(database);
             controller.Request = new HttpRequestMessage();
             controller.Configuration = new HttpConfiguration();
 
             // Act
-            LiteDatabase db = new LiteDatabase(@"C:\database.db");
+            LiteDatabase db = database;
             var col = db.GetCollection<User>();
             if (!col.Exists(Query.EQ("Id", 9998))) col.Delete(9998);
             col.Insert(new User { username = "test", password = "test", status = "user", id = 9998 });
@@ -61,7 +62,7 @@ namespace AdminPanel_Service.Tests
             controller.Configuration = new HttpConfiguration();
 
             // Act
-            LiteDatabase db = new LiteDatabase(@"C:\database.db");
+            LiteDatabase db = database;
             var col = db.GetCollection<User>();
             if (!col.Exists(Query.EQ("Id", 9998))) col.Delete(9998);
             if (!col.Exists(Query.EQ("Id", 9999))) col.Delete(9999);
@@ -76,12 +77,12 @@ namespace AdminPanel_Service.Tests
         [Test]
         public void Delete_InsufficientPermission()
         {
-            var controller = new UserController();
+            var controller = new UserController(database);
             controller.Request = new HttpRequestMessage();
             controller.Configuration = new HttpConfiguration();
 
             // Act
-            LiteDatabase db = new LiteDatabase(@"C:\database.db");
+            LiteDatabase db = database;
             var col = db.GetCollection<User>();
             if (!col.Exists(Query.EQ("Id", 9998))) col.Delete(9998);
             col.Insert(new User { username = "test", password = "test", status = "user", id = 9998 });
@@ -97,12 +98,12 @@ namespace AdminPanel_Service.Tests
         [Test]
         public void Update_UserDoesExist()
         {
-            var controller = new UserController();
+            var controller = new UserController(database);
             controller.Request = new HttpRequestMessage();
             controller.Configuration = new HttpConfiguration();
 
             // Act
-            LiteDatabase db = new LiteDatabase(@"C:\database.db");
+            LiteDatabase db = database;
             var col = db.GetCollection<User>();
             if (!col.Exists(Query.EQ("Id", 9998))) col.Delete(9998);
             col.Insert(new User { username = "test", password = "test", status = "user", id = 9998 });
@@ -123,7 +124,7 @@ namespace AdminPanel_Service.Tests
             controller.Configuration = new HttpConfiguration();
 
             // Act
-            LiteDatabase db = new LiteDatabase(@"C:\database.db");
+            LiteDatabase db = database;
             var col = db.GetCollection<User>();
             if (!col.Exists(Query.EQ("Id", 9998))) col.Delete(9998);
             if (!col.Exists(Query.EQ("Id", 9999))) col.Delete(9999);
@@ -138,12 +139,12 @@ namespace AdminPanel_Service.Tests
         [Test]
         public void Update_InsufficientPermission()
         {
-            var controller = new UserController();
+            var controller = new UserController(database);
             controller.Request = new HttpRequestMessage();
             controller.Configuration = new HttpConfiguration();
 
             // Act
-            LiteDatabase db = new LiteDatabase(@"C:\database.db");
+            LiteDatabase db = database;
             var col = db.GetCollection<User>();
             if (!col.Exists(Query.EQ("Id", 9998))) col.Delete(9998);
             col.Insert(new User { username = "test", password = "test", status = "user", id = 9998 });

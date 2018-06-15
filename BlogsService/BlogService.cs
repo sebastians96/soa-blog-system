@@ -4,17 +4,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using Authentication_Service.Controllers;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace BlogsService
 {
     public class BlogService : IBlogService
     {
         private readonly IBlogContext _blogContext;
-        NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly UserController _userController;
 
         public BlogService()
         {
             this._blogContext = new BlogContext();
+            this._userController = new UserController();
         }
 
         //Comments
@@ -22,20 +26,28 @@ namespace BlogsService
         public string AddComment(CommentWCF comment)
         {
             logger.Info("Registeres POST request - attempting to add new comment.");
-            var post = _blogContext.Posts.ToList().Find(p => p.PostID == comment.PostID);
-            if (post == null)
+            var response = _userController.Exist(JObject.Parse("{\"username\": \"" + comment.User + "\"}"));
+            if ((Boolean) response["exist"])
             {
-                logger.Warn("Cannot add comment - There is no such PostID.");
-                return "Error there is no such PostId.";
+                var post = _blogContext.Posts.ToList().Find(p => p.PostID == comment.PostID);
+                if (post == null)
+                {
+                    logger.Warn("Cannot add comment - There is no such PostID.");
+                    return "Error there is no such PostId";
+                }
+                else
+                {
+                    var commentDB = new Comment() { User = comment.User, Content = comment.Content, Date = comment.Date, PostID = comment.PostID };
+                    _blogContext.Comments.Add(commentDB);
+                    _blogContext.SaveChanges();
+                    logger.Info("New comment added.");
+                    return "Comment added";
+                }
             }
             else
             {
-                var commentDB = new Comment() { User = comment.User, Content = comment.Content, Date = comment.Date, PostID = comment.PostID };
-                _blogContext.Comments.Add(commentDB);
-                _blogContext.SaveChanges();
-
-                logger.Info("New comment added.");
-                return "Comment added.";
+                logger.Info("Cannot add Comment - there is no such user.");
+                return "There is no such user";
             }
         }
 
@@ -118,7 +130,7 @@ namespace BlogsService
             [DataMember]
             public string Content { get; set; }
             [DataMember]
-            public int Title { get; set; }
+            public string Title { get; set; }
         }
     }
 }

@@ -18,7 +18,15 @@ namespace Authentication_Service.Controllers
     /// </summary>
     public class UserController : ApiController
     {
-        LiteDatabase db = new LiteDatabase(@"C:\database.db");
+        LiteDatabase db;
+        public UserController()
+        {
+            db = new LiteDatabase(@"C:\database.db");
+        }
+        public UserController(LiteDatabase database)
+        {
+            db = database;
+        }
         NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         /// <summary>
         /// This function is registering new users.
@@ -90,7 +98,28 @@ namespace Authentication_Service.Controllers
             }
         }
 
-        
+        [Route("user/exist")]
+        [HttpPost]
+        public JObject Exist(JObject json)
+        {
+            logger.Info("Exist post request received - searching for user in the database");
+            ExistRequest user = json.ToObject<ExistRequest>();
+            User current = db.GetCollection<User>().Find(Query.EQ("username", user.username)).FirstOrDefault();
+            JObject tmp = new JObject();
+            if (current != null)
+            {
+                logger.Info("User has been found in the database.");
+                tmp.Add("exist", true);
+                return tmp;
+            }
+            else
+            {
+                logger.Info("User does not exist in the database.");
+                tmp.Add("exist", false);
+                return tmp;
+            }
+        }
+
     }
 
 }
