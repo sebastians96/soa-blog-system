@@ -1,8 +1,13 @@
-﻿using System;
+﻿using Authentication_Service.Controllers;
+using BlogDataAccessLayer.Context;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Authentication_Service.Models;
+using Newtonsoft.Json.Linq;
 
 namespace BlogsService.Tests
 {
