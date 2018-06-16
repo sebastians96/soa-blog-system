@@ -96,28 +96,48 @@ namespace BlogsService
 
         public string AddPost(PostWCF post)
         {
-            var postDB = new Post() { User = post.User, Content = post.Content, Date = post.Date };
-            _blogContext.Posts.Add(postDB);
-            _blogContext.SaveChanges();
-            return "Post added";
+            logger.Info("Registeres POST request - attempting to add new post.");
+            var response = _userController.Exist(JObject.Parse("{\"username\": \"" + post.User + "\"}"));
+            if ((Boolean)response["exist"])
+            {
+                var postDB = new Post() { User = post.User, Content = post.Content, Date = post.Date, Title = post.Title };
+                _blogContext.Posts.Add(postDB);
+                _blogContext.SaveChanges();
+                logger.Info("New post added.");
+                return "Post added";
+
+            }
+            else
+            {
+                logger.Info("Cannot add Post - there is no such user.");
+                return "There is no such user";
+            }
         }
 
         public List<Post> GetAllPosts()
         {
+            logger.Info("Registered GET request - returning all posts.");
             return _blogContext.Posts.ToList();
         }
 
         public Post GetPostById(int id)
         {
+            logger.Info("Registered GET request - returning post with id:{1}", id);
             return _blogContext.Posts.ToList().Find(c => c.PostID == id);
         }
 
         public Post DeletePost(int id)
         {
+            logger.Info("Registered DELETE request - attempting to delete post with id:{1}", id);
             var itemToDelete = _blogContext.Posts.ToList().Find(c => c.PostID == id);
-            if (itemToDelete == null) return null;
+            if (itemToDelete == null)
+            {
+                logger.Warn("Cannot delete post with id:{1} - there is no such post", id);
+                return null;
+            }
             _blogContext.Posts.Remove(itemToDelete);
             _blogContext.SaveChanges();
+            logger.Info("Post deleted");
             return itemToDelete;
         }
 
