@@ -242,6 +242,10 @@
     <Content Include="Views\Blog\Register.cshtml" />
     <Content Include="Views\Blog\RegisterPost.cshtml" />
     <Content Include="Views\Blog\Admin.cshtml" />
+    <Content Include="Views\Blog\Add.cshtml" />
+    <Content Include="Views\Blog\AddPost.cshtml" />
+    <Content Include="Views\Blog\AddComment.cshtml" />
+    <Content Include="Views\Blog\AddCommentPost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

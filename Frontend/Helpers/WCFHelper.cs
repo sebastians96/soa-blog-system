@@ -13,6 +13,7 @@ using Newtonsoft.Json.Linq;
 using System.Runtime.Serialization.Json;
 using static BlogsService.BlogService;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace Frontend.Helpers
 {
@@ -31,7 +32,6 @@ namespace Frontend.Helpers
         {
             var list = new List<Post>();
             var jsonObject = new JObject();
-            var ser = new DataContractJsonSerializer(typeof(List<Post>));
             HttpResponseMessage response = await _client.GetAsync("Blog/GetAllPosts");
             if(response.IsSuccessStatusCode)
             {
@@ -48,7 +48,6 @@ namespace Frontend.Helpers
         {
             var list = new List<Comment>();
             var jsonObject = new JObject();
-            var ser = new DataContractJsonSerializer(typeof(List<Post>));
             HttpResponseMessage response = await _client.GetAsync("Blog/GetAllComments");
             if (response.IsSuccessStatusCode)
             {
@@ -59,6 +58,32 @@ namespace Frontend.Helpers
                 list.Add(singleComment.ToObject<Comment>());
             }
             return list;
+        }
+
+        public async Task<string> AddPost(PostWCF post)
+        {
+            var jsonObject = JsonConvert.SerializeObject(post);
+            var content = new StringContent(jsonObject.ToString(), Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await _client.PostAsync("Blog/AddPost", content);
+            if (response.IsSuccessStatusCode)
+            {
+                var wcfResponse = await response.Content.ReadAsAsync<string>();
+                return wcfResponse;
+            }
+            return "Error";
+        }
+
+        public async Task<string> AddComment(CommentWCF comment)
+        {
+            var jsonObject = JsonConvert.SerializeObject(comment);
+            var content = new StringContent(jsonObject.ToString(), Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await _client.PostAsync("Blog/AddComment", content);
+            if (response.IsSuccessStatusCode)
+            {
+                var wcfResponse = await response.Content.ReadAsAsync<string>();
+                return wcfResponse;
+            }
+            return "Error";
         }
     }
 }

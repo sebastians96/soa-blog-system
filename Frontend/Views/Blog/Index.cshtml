@@ -10,7 +10,7 @@
             @Html.DisplayFor(modelItem => item.Content)
         </p>
         <hr />
-        <h4>Komentarze <a href="@("AddComent?id=" + item.PostID)"><button type="button" class="btn">Dodaj</button></a></h4>
+        <h4>Komentarze <a href="@("AddComment?id=" + item.PostID)"><button type="button" class="btn">Dodaj</button></a></h4>
         <div class="comments">
             @{
                 var thisPostComments = Model.Comments.Where(x => x.PostID == item.PostID).ToList();

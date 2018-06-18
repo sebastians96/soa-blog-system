@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using Frontend.Models;
 using Authentication_Service.Models;
 using Newtonsoft.Json.Linq;
+using BlogDataAccessLayer.Entity;
+using static BlogsService.BlogService;
+using BlogsService;
 
 namespace Frontend.Controllers
 {
@@ -39,6 +42,11 @@ namespace Frontend.Controllers
             return View();
         }
 
+        public ActionResult Add()
+        {
+            return View();
+        }
+
         public async Task<ActionResult> Admin()
         {
             var cookie = Request.Cookies["Login"];
@@ -51,6 +59,12 @@ namespace Frontend.Controllers
             {
                 return View("Error");
             }
+        }
+
+        public ActionResult AddComment(int id)
+        {
+            ViewBag.postID = id;
+            return View();
         }
 
         [HttpPost]
@@ -81,6 +95,46 @@ namespace Frontend.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<ActionResult> AddPost(Post post)
+        {
+            var cookie = Request.Cookies["Login"];
+            if(cookie != null && cookie["status"].Contains("admin"))
+            {
+                post.User = cookie["username"];
+                var status = await _blogService.AddPost(postWCFChanger(post));
+                if(status.Equals("Error"))
+                {
+                    return View("Error");
+                }
+                return View();
+            } else
+            {
+                return View("Error");
+            }
+            
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddCommentPost(Comment comment)
+        {
+            var cookie = Request.Cookies["Login"];
+            if (cookie != null && cookie["status"].Contains("user"))
+            {
+                comment.User = cookie["username"];
+                var status = await _blogService.AddComment(commentWCFChanger(comment));
+                if (status.Equals("Error"))
+                {
+                    return View("Error");
+                }
+                return View();
+            }
+            else
+            {
+                return View("Error");
+            }
+        }
+
         private HttpCookie CreateLoginCookie(User user, JObject json)
         {
             var cookie = new HttpCookie("Login");
@@ -91,6 +145,26 @@ namespace Frontend.Controllers
             cookie["status"] = status;
             cookie.Expires = DateTime.Now.AddHours(1);
             return cookie;
+        }
+
+        private PostWCF postWCFChanger(Post post)
+        {
+            var t = new PostWCF();
+            t.Content = post.Content;
+            t.Date = post.Date;
+            t.Title = post.Title;
+            t.User = post.User;
+            return t;
+        }
+
+        private CommentWCF commentWCFChanger(Comment comment)
+        {
+            var t = new CommentWCF();
+            t.Content = comment.Content;
+            t.Date = comment.Date;
+            t.User = comment.User;
+            t.PostID = comment.PostID;
+            return t;
         }
     }
 }
