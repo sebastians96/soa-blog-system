@@ -13,6 +13,7 @@ namespace Frontend.Controllers
     public class BlogController : Controller
     {
         private static WCFHelper _blogService = new WCFHelper();
+        private static APIHelper _restApi = new APIHelper();
         // GET: Blog
         public async Task<ActionResult> Index()
         {
@@ -33,9 +34,15 @@ namespace Frontend.Controllers
         }
 
         [HttpPost]
-        public ActionResult LoginPost(User user)
+        public async Task<ActionResult> LoginPost(User user)
         {
-            var t = new User();
+            var jsonResponse = await _restApi.Login(user);
+            var htmlMessage = "Nie udało się zalogować";
+            if(jsonResponse["id"].ToObject<int>() != -1)
+            {
+                htmlMessage = "Zalogowałeś się jako " + user.username;
+            }
+            ViewBag.message = htmlMessage;
             return View();
         }
     }
