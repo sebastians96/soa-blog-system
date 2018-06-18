@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Threading.Tasks;
 using Frontend.Models;
 using Authentication_Service.Models;
+using Newtonsoft.Json.Linq;
 
 namespace Frontend.Controllers
 {
@@ -33,6 +34,11 @@ namespace Frontend.Controllers
             return View();
         }
 
+        public ActionResult Register()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<ActionResult> LoginPost(User user)
         {
@@ -41,9 +47,20 @@ namespace Frontend.Controllers
             if(jsonResponse["id"].ToObject<int>() != -1)
             {
                 htmlMessage = "Zalogowałeś się jako " + user.username;
+                Response.Cookies.Add(CreateLoginCookie(user, jsonResponse));
             }
             ViewBag.message = htmlMessage;
             return View();
+        }
+
+        private HttpCookie CreateLoginCookie(User user, JObject json)
+        {
+            var cookie = new HttpCookie("Login");
+            var id = json["id"].ToObject<int>();
+            var status = json["status"].ToObject<string>();
+            cookie.Value = user.username + ";" + id + ";" + status;
+            cookie.Expires = DateTime.Now.AddHours(1);
+            return cookie;
         }
     }
 }
