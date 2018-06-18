@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Threading.Tasks;
 using Frontend.Models;
+using Authentication_Service.Models;
 
 namespace Frontend.Controllers
 {
@@ -24,6 +25,18 @@ namespace Frontend.Controllers
             compoundView.Comments = commentsList;
 
             return View(compoundView);
+        }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult LoginPost(User user)
+        {
+            var t = new User();
+            return View();
         }
     }
 }

@@ -1,0 +1,22 @@
+﻿@model Authentication_Service.Models.User
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2 style="margin: 20px">Login</h2>
+<div class="modal-dialog-centered" style="text-align: center;">
+    @using(Html.BeginForm("LoginPost", "Blog", FormMethod.Post)) {
+        <span style="margin: 10px;">Login: @Html.EditorFor(model => model.username)</span>
+        <br/>
+        <span style="margin-top: 10px;">Password: @Html.PasswordFor(model => model.password)</span>
+        <br/>
+        <input type="submit" value="Login"/>
+    }
+    @*<form method="post">
+        <input type="text" name="user" placeholder="Username" />
+        <input type="password" name="pass" placeholder="Password" />
+        <input type="submit" name="login" value="Login" />
+    </form>*@
+</div>
+

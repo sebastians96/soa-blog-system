@@ -154,6 +154,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\APIHelper.cs" />
     <Compile Include="Helpers\WCFHelper.cs" />
     <Compile Include="Models\CompoundBlogView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -236,6 +237,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Blog\Index.cshtml" />
+    <Content Include="Views\Blog\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -252,6 +254,10 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Authentication-Service\Authentication-Service.csproj">
+      <Project>{75e6fd1f-9fb5-4d66-9c49-946c8cb4f230}</Project>
+      <Name>Authentication-Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BlogDataAccessLayer\BlogDataAccessLayer.csproj">
       <Project>{423e1764-312c-4ae0-b31b-499314d0d1aa}</Project>
       <Name>BlogDataAccessLayer</Name>
