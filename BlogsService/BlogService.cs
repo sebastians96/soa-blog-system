@@ -79,16 +79,16 @@ namespace BlogsService
             return itemToDelete;
         }
 
-        [DataContract]
+        [DataContract(Name = "Response")]
         public class CommentWCF
         {
-            [DataMember]
+            [DataMember(Name = "User")]
             public string User { get; set; }
-            [DataMember]
+            [DataMember(Name = "Date")]
             public string Date { get; set; }
-            [DataMember]
+            [DataMember(Name = "Content")]
             public string Content { get; set; }
-            [DataMember]
+            [DataMember(Name = "PostID")]
             public int PostID { get; set; }
         }
 
@@ -141,16 +141,16 @@ namespace BlogsService
             return itemToDelete;
         }
 
-        [DataContract]
+        [DataContract(Name = "Response")]
         public class PostWCF
         {
-            [DataMember]
+            [DataMember(Name = "User")]
             public string User { get; set; }
-            [DataMember]
+            [DataMember(Name = "Date")]
             public string Date { get; set; }
-            [DataMember]
+            [DataMember(Name = "Content")]
             public string Content { get; set; }
-            [DataMember]
+            [DataMember(Name = "Title")]
             public string Title { get; set; }
         }
     }

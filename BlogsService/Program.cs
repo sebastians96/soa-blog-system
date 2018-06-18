@@ -9,7 +9,7 @@ namespace BlogsService
     {
         static void Main(string[] args)
         {
-            Uri baseAddress = new Uri("http://localhost:80/Blog");
+            Uri baseAddress = new Uri("http://localhost:8080/Blog");
 
             WebServiceHost myHost = new WebServiceHost(typeof(BlogService), baseAddress);
             Console.WriteLine("Starting Service");

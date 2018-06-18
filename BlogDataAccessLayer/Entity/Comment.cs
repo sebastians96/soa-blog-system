@@ -9,7 +9,7 @@ namespace BlogDataAccessLayer.Entity
     /// <summary>
     /// Entity model for table Comments
     /// </summary>
-    [Serializable]
+    //[Serializable]
     [Table("Comments")]
     public class Comment
     {

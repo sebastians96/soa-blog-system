@@ -15,7 +15,7 @@ namespace BlogDataAccessLayer.Context
         /// <summary>
         /// Constructor with connection string passed to base context
         /// </summary>
-        public BlogContext() : base("Server=LENOVO-PC\\SIENMICH;Database=blog;User Id=root;Password=root;")
+        public BlogContext() : base(@"Server=DESKTOP-H6URO1D\SQLEXPRESS;Database=blog;User Id=root;Password=root;")
         {
             Database.SetInitializer<BlogContext>(new BlogInitializer());
             Configuration.LazyLoadingEnabled = true;

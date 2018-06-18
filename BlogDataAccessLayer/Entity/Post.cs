@@ -10,7 +10,7 @@ namespace BlogDataAccessLayer.Entity
     /// <summary>
     /// Entity model for Posts
     /// </summary>
-    [Serializable]
+    //[Serializable]
     [Table("Posts")]
     public class Post
     {

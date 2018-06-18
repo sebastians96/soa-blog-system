@@ -1,0 +1,29 @@
+﻿@model Frontend.Models.CompoundBlogView
+
+@foreach (var item in Model.Posts)
+{
+    <div class="blogPost">
+        <h2>@Html.DisplayFor(modelItem => item.Title)</h2>
+        <p><span style="color: gray;">Autor: </span>@Html.DisplayFor(modelItem => item.User)
+        <span style="color: gray;">Data: </span>@Html.DisplayFor(modelItem => item.Date)</p>
+        <p style="font-size: 20px;">
+            @Html.DisplayFor(modelItem => item.Content)
+        </p>
+        <hr />
+        <h4>Komentarze <a href="@("AddComent?id=" + item.PostID)"><button type="button" class="btn">Dodaj</button></a></h4>
+        <div class="comments">
+            @{
+                var thisPostComments = Model.Comments.Where(x => x.PostID == item.PostID).ToList();
+            }
+            @foreach (var comment in thisPostComments)
+            {
+                <div>
+                    <span style="color: gray;">User:</span> @Html.DisplayFor(x => comment.User)<span style="color: gray;"> Data:</span> @Html.DisplayFor(x => comment.Date)
+                    <p>@Html.DisplayFor(x => comment.Content)</p>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+</table>

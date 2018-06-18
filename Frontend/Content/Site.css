@@ -22,3 +22,13 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.blogPost {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid;
+}
+
+.comments {
+    font-size: 14px;
+}
