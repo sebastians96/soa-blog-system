@@ -27,17 +27,17 @@ namespace BlogDataAccessLayer.Initializer
             var post1 = new Post()
             {
                 PostID = 1,
-                Content = "Jestem dzik i jem ile moge",
+                Content = "for breakfast i ate 2 eggs, 2 slice of bacon and 200g bread. Counted calories:782.64",
                 Date = "2018-07-08",
                 User = "KacpSzalw",
-                Title = "Odżywianie - Kacper Szalwa"
+                Title = "Breakfast - Kacper Szalwa"
             };
 
             var comment1 = new Comment()
             {
                 CommentID = 1,
-                Content = "Kacper dobra robota!",
-                Date = "2018-07-08",
+                Content = "Kacper good job but you should eat also 250g chicken. Counted calories:550",
+                Date = "2018-07-09",
                 User = "SienMich",
                 PostID = 1
             };
