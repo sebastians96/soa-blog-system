@@ -39,12 +39,26 @@ namespace Frontend.Controllers
             return View();
         }
 
+        public async Task<ActionResult> Admin()
+        {
+            var cookie = Request.Cookies["Login"];
+            if (cookie != null && cookie.Value.Contains("admin"))
+            {
+                var postsList = await _blogService.GetAllPosts();
+                return View(postsList);
+            }
+            else
+            {
+                return View("Error");
+            }
+        }
+
         [HttpPost]
         public async Task<ActionResult> LoginPost(User user)
         {
             var jsonResponse = await _restApi.Login(user);
             var htmlMessage = "Nie udało się zalogować";
-            if(jsonResponse["id"].ToObject<int>() != -1)
+            if (jsonResponse["id"].ToObject<int>() != -1)
             {
                 htmlMessage = "Zalogowałeś się jako " + user.username;
                 Response.Cookies.Add(CreateLoginCookie(user, jsonResponse));
@@ -72,7 +86,9 @@ namespace Frontend.Controllers
             var cookie = new HttpCookie("Login");
             var id = json["id"].ToObject<int>();
             var status = json["status"].ToObject<string>();
-            cookie.Value = user.username + ";" + id + ";" + status;
+            cookie["username"] = user.username;
+            cookie["id"] = id.ToString();
+            cookie["status"] = status;
             cookie.Expires = DateTime.Now.AddHours(1);
             return cookie;
         }

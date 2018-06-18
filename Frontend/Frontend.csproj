@@ -241,6 +241,7 @@
     <Content Include="Views\Blog\LoginPost.cshtml" />
     <Content Include="Views\Blog\Register.cshtml" />
     <Content Include="Views\Blog\RegisterPost.cshtml" />
+    <Content Include="Views\Blog\Admin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
