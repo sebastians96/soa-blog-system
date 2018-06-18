@@ -27,5 +27,12 @@ namespace Frontend.Helpers
             var jsonObject = await response.Content.ReadAsAsync<JObject>();
             return jsonObject;
         }
+
+        public async Task<JObject> Register(User user)
+        {
+            HttpResponseMessage response = await _client.PostAsJsonAsync<User>("/register", user);
+            var jsonObject = await response.Content.ReadAsAsync<JObject>();
+            return jsonObject;
+        }
     }
 }

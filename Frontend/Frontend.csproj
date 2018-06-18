@@ -239,6 +239,8 @@
     <Content Include="Views\Blog\Index.cshtml" />
     <Content Include="Views\Blog\Login.cshtml" />
     <Content Include="Views\Blog\LoginPost.cshtml" />
+    <Content Include="Views\Blog\Register.cshtml" />
+    <Content Include="Views\Blog\RegisterPost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

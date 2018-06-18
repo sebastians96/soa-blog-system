@@ -1,0 +1,24 @@
+﻿@model Authentication_Service.Models.User
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>Register</h2>
+<div class="modal-dialog-centered" style="text-align: center;">
+    @using (Html.BeginForm("RegisterPost", "Blog", FormMethod.Post))
+    {
+        <span style="margin: 10px;">Login: @Html.EditorFor(model => model.username)</span>
+        <br />
+        <span style="margin-top: 10px;">Password: @Html.PasswordFor(model => model.password)</span>
+        <br />
+        @Html.DropDownList("status", new SelectList(
+            new List<SelectListItem>
+            {
+            new SelectListItem {Text = "User", Value = "user"},
+            new SelectListItem {Text = "Admin", Value = "admin"},
+             }, "Value", "Text"))
+        <br />
+        <input type="submit" value="Register" />
+    }
+</div>

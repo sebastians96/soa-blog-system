@@ -53,6 +53,20 @@ namespace Frontend.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<ActionResult> RegisterPost(User user)
+        {
+            var jsonResponse = await _restApi.Register(user);
+            var htmlMessage = "Nie udało się zarejestrować";
+            if (jsonResponse["id"].ToObject<int>() != -1)
+            {
+                htmlMessage = "Zarejestrowałeś się jako " + user.username;
+                Response.Cookies.Add(CreateLoginCookie(user, jsonResponse));
+            }
+            ViewBag.message = htmlMessage;
+            return View();
+        }
+
         private HttpCookie CreateLoginCookie(User user, JObject json)
         {
             var cookie = new HttpCookie("Login");
