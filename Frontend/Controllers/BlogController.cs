@@ -44,7 +44,15 @@ namespace Frontend.Controllers
 
         public ActionResult Add()
         {
-            return View();
+            var cookie = Request.Cookies["Login"];
+            if (cookie != null && cookie.Value.Contains("admin"))
+            {
+                return View();
+            }
+            else
+            {
+                return View("PermissionError");
+            }
         }
 
         public async Task<ActionResult> Admin()
