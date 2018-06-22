@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Routing;
 
 namespace AdminPanel_Service
 {
@@ -14,11 +15,12 @@ namespace AdminPanel_Service
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+            var r = config.Routes.MapHttpRoute(
+                name: "AdminApi",
+                routeTemplate: "admin/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
         }
     }
 }

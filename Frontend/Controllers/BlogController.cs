@@ -57,11 +57,12 @@ namespace Frontend.Controllers
 
         public async Task<ActionResult> Admin()
         {
+            var content = new CompoundAdminView();
             var cookie = Request.Cookies["Login"];
             if (cookie != null && cookie.Value.Contains("admin"))
             {
-                var postsList = await _blogService.GetAllPosts();
-                return View(postsList);
+                content.Posts = await _blogService.GetAllPosts();
+                return View(content);
             }
             else
             {
@@ -152,6 +153,32 @@ namespace Frontend.Controllers
                 {
                     return View("Error");
                 }
+            }
+            else
+            {
+                return View("PermissionError");
+            }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> DeletePost(int id)
+        {
+            var cookie = Request.Cookies["Login"];
+            if(cookie != null && cookie["status"].Contains("admin"))
+            {
+                var status = await _restApi.DeletePost(id);
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UpdateUser(User user)
+        {
+            var cookie = Request.Cookies["Login"];
+            if (cookie != null && cookie["status"].Contains("admin"))
+            {
+                var status = await _restApi.Update(user);
+                return View();
             }
             else
             {

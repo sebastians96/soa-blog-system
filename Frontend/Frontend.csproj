@@ -156,6 +156,7 @@
     </Compile>
     <Compile Include="Helpers\APIHelper.cs" />
     <Compile Include="Helpers\WCFHelper.cs" />
+    <Compile Include="Models\CompoundAdminView.cs" />
     <Compile Include="Models\CompoundBlogView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -248,6 +249,7 @@
     <Content Include="Views\Blog\AddCommentPost.cshtml" />
     <Content Include="Views\Shared\PermissionError.cshtml" />
     <Content Include="Views\Blog\LogoutPost.cshtml" />
+    <Content Include="Views\Blog\DeletePost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
