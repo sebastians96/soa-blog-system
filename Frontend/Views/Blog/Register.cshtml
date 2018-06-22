@@ -4,21 +4,21 @@
     ViewBag.Title = "Register";
 }
 
-<h2>Register</h2>
-<div class="modal-dialog-centered" style="text-align: center;">
+<h2 style="margin: 20px;">Register</h2>
+<div class="modal-dialog-centered form-horizontal" style="text-align: center;">
     @using (Html.BeginForm("RegisterPost", "Blog", FormMethod.Post))
     {
-        <span style="margin: 10px;">Login: @Html.EditorFor(model => model.username)</span>
+        <span style="margin: 10px;">Login: @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })</span>
         <br />
-        <span style="margin-top: 10px;">Password: @Html.PasswordFor(model => model.password)</span>
-        <br />
+        <span style="margin-top: 10px;">Password: @Html.PasswordFor(model => model.password, new { @class = "form-control" } )</span>
+        <span>Status</span>
         @Html.DropDownList("status", new SelectList(
             new List<SelectListItem>
             {
             new SelectListItem {Text = "User", Value = "user"},
             new SelectListItem {Text = "Admin", Value = "admin"},
-             }, "Value", "Text"))
+             }, "Value", "Text"), new { @style="margin: 20px;" })
         <br />
-        <input type="submit" value="Register" />
+        <input type="submit" value="Register" class="btn btn-primary"/>
     }
 </div>

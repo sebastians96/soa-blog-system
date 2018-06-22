@@ -8,11 +8,11 @@
 <div class="modal-dialog-centered" style="text-align: center;">
     @using (Html.BeginForm("LoginPost", "Blog", FormMethod.Post))
     {
-        <span style="margin: 10px;">Login: @Html.EditorFor(model => model.username)</span>
+        <span style="margin: 10px;">Login: @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })</span>
         <br />
-        <span style="margin-top: 10px;">Password: @Html.PasswordFor(model => model.password)</span>
+        <span style="margin-top: 10px;">Password: @Html.PasswordFor(model => model.password, new { @class = "form-control" })</span>
         <br />
-        <input type = "submit" value = "Login" />
+        <input type = "submit" value = "Login" class="btn btn-primary"/>
     }
 </div>
 
