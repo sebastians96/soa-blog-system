@@ -49,18 +49,18 @@ namespace BlogsService.Tests
             Assert.AreNotEqual(null, responseUser["id"]);
 
             var count1 = _blogContext.Comments.Count();
-            _blogService.AddComment(new BlogService.CommentWCF() { User = "Test", Content = "Test", Date = "01.02.2015", PostID = 1 });
+            _blogService.AddComment(new BlogService.CommentWCF() { User = "Test", Content = "for breakfast i ate 2 eggs, bacon, and french toast", Date = "01.02.2015", PostID = 1 });
             var count2 = _blogContext.Comments.Count();
             Assert.AreEqual(count1 + 1, count2);
-            var itemToDelete = _blogContext.Comments.ToList().FindAll(c => c.Content.Equals("Test"));
+            var itemToDelete = _blogContext.Comments.ToList().FindAll(c => c.User.Equals("Test"));
             _blogContext.Comments.RemoveRange(itemToDelete);
         }
 
         [Test]
         public void DeleteCommentTest()
         {
-            _blogService.AddComment(new BlogService.CommentWCF() { User = "Test", Content = "Test", Date = "01.01.0000", PostID = 1 });
-            var itemToDelete = _blogContext.Comments.ToList().Find(c => c.Content.Equals("Test"));
+            _blogService.AddComment(new BlogService.CommentWCF() { User = "Test", Content = "for breakfast i ate 2 eggs", Date = "01.01.0000", PostID = 1 });
+            var itemToDelete = _blogContext.Comments.ToList().Find(c => c.User.Equals("Test"));
             var count1 = _blogContext.Comments.Count();
             _blogService.DeleteComment(itemToDelete.CommentID);
             var count2 = _blogContext.Comments.Count();

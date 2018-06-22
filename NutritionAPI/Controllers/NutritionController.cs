@@ -34,7 +34,7 @@ namespace NutritionAPI.Controllers
         [Route("GetCalories")]
         [SwaggerOperation("Create")]
         [SwaggerResponse(HttpStatusCode.Created)]
-        public double GetCalories([FromBody] JObject data)
+        public double GetCalories(JObject data)
         {
             StreamWriter requestWriter = new StreamWriter(_request.GetRequestStream(), System.Text.Encoding.ASCII);
             requestWriter.Write(data);
@@ -47,7 +47,7 @@ namespace NutritionAPI.Controllers
             responseReader.Close();
 
             var json = JObject.Parse(response);
-
+            if( json["foods"] == null) return 0.0;
             var calories = 0.0;
             foreach ( var food in json["foods"])
             {

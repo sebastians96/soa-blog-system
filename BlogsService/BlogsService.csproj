@@ -120,6 +120,10 @@
       <Project>{423e1764-312c-4ae0-b31b-499314d0d1aa}</Project>
       <Name>BlogDataAccessLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NutritionAPI\NutritionAPI.csproj">
+      <Project>{676040de-46fa-4e59-8eeb-4cbf8fca1138}</Project>
+      <Name>NutritionAPI</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">

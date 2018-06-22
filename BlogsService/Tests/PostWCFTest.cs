@@ -49,10 +49,10 @@ namespace BlogsService.Tests
             Assert.AreNotEqual(null, responseUser["id"]);
 
             var count1 = _blogContext.Posts.Count();
-            _blogService.AddPost(new BlogService.PostWCF() { User = "Test", Content = "Test", Date = "01.02.2015", Title = "Tytul" });
+            _blogService.AddPost(new BlogService.PostWCF() { User = "Test", Content = "for breakfast i ate 2 eggs", Date = "01.02.2015", Title = "Tytul" });
             var count2 = _blogContext.Posts.Count();
             Assert.AreEqual(count1 + 1, count2);
-            var itemToDelete = _blogContext.Posts.ToList().FindAll(c => c.Content.Equals("Test"));
+            var itemToDelete = _blogContext.Posts.ToList().FindAll(c => c.User.Equals("Test"));
             _blogContext.Posts.RemoveRange(itemToDelete);
         }
 
@@ -62,10 +62,10 @@ namespace BlogsService.Tests
             _blogService.AddPost(new BlogService.PostWCF()
             {
                 User = "Test",
-                Content = "Test",
+                Content = "for breakfast i ate 2 eggs",
                 Date = "01.01.0000",
                 Title = "tytul" });
-            var itemToDelete = _blogContext.Posts.ToList().Find(c => c.Content.Equals("Test"));
+            var itemToDelete = _blogContext.Posts.ToList().Find(c => c.User.Equals("Test"));
             var count1 = _blogContext.Posts.Count();
             _blogService.DeletePost(itemToDelete.PostID);
             var count2 = _blogContext.Posts.Count();

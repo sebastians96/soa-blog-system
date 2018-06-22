@@ -7,6 +7,9 @@ using System.Runtime.Serialization;
 using Authentication_Service.Controllers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NutritionAPI.Controllers;
+using System.Net;
+using System.IO;
 
 namespace BlogsService
 {
@@ -14,12 +17,14 @@ namespace BlogsService
     {
         private readonly IBlogContext _blogContext;
         private readonly UserController _userController;
+        private readonly NutritionController _nutritionController;
         NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public BlogService()
         {
             this._blogContext = new BlogContext();
             this._userController = new UserController();
+            this._nutritionController = new NutritionController();
         }
 
         //Comments
@@ -38,7 +43,10 @@ namespace BlogsService
                 }
                 else
                 {
-                    var commentDB = new Comment() { User = comment.User, Content = comment.Content, Date = comment.Date, PostID = comment.PostID };
+
+                    var calories = getCalories(comment.Content);
+                    var content1 = comment.Content + " Counted calories:" + calories;
+                    var commentDB = new Comment() { User = comment.User, Content = content1, Date = comment.Date, PostID = comment.PostID };
                     _blogContext.Comments.Add(commentDB);
                     _blogContext.SaveChanges();
                     logger.Info("New comment added.");
@@ -100,7 +108,9 @@ namespace BlogsService
             var response = _userController.Exist(JObject.Parse("{\"username\": \"" + post.User + "\"}"));
             if ((Boolean)response["exist"])
             {
-                var postDB = new Post() { User = post.User, Content = post.Content, Date = post.Date, Title = post.Title };
+                var calories = getCalories(post.Content);
+                var content1 = post.Content + " Counted calories:" + calories;
+                var postDB = new Post() { User = post.User, Content = content1, Date = post.Date, Title = post.Title };
                 _blogContext.Posts.Add(postDB);
                 _blogContext.SaveChanges();
                 logger.Info("New post added.");
@@ -153,5 +163,33 @@ namespace BlogsService
             [DataMember(Name = "Title")]
             public string Title { get; set; }
         }
+
+        private string getCalories(String content)
+        {
+            string _uri = "http://nutritionixapi.azurewebsites.net/api/Nutrition/GetCalories";
+            HttpWebRequest _request;
+
+            _request = (HttpWebRequest)WebRequest.Create(_uri);
+            _request.Method = "POST";
+            _request.ContentType = "application/json";
+
+            var json1 = "{\"query\":\""+ content + "\",\"timezone\": \"Europe\"}";
+            
+            StreamWriter requestWriter = new StreamWriter(_request.GetRequestStream(), System.Text.Encoding.ASCII);
+            requestWriter.Write(json1);
+            requestWriter.Close();
+
+            WebResponse webResponse = _request.GetResponse();
+            Stream webStream = webResponse.GetResponseStream();
+            StreamReader responseReader = new StreamReader(webStream);
+            var response = responseReader.ReadToEnd();
+            responseReader.Close();
+
+           // var json = JObject.Parse(response);
+
+            //
+            return response;
+        }
+
     }
 }

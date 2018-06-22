@@ -47,7 +47,7 @@ namespace AdminPanel_Service.Tests
             col.Delete(123);
             col.Insert(new User { username = "user", password = "user", id = 123, status = "user" });
             IBlogService bs = new BlogService();
-            bs.AddPost(new BlogService.PostWCF {User = "user", Date = "01.01.2001", Content = "some content", Title = "" });
+            bs.AddPost(new BlogService.PostWCF {User = "user", Date = "01.01.2001", Content = "some content 100g chicken", Title = "" });
             var response = controller.Delete(JObject.Parse("{ \"id\":\"123\",\"delete\":\"125\"}"));
 
             Assert.AreNotEqual(null, response);
