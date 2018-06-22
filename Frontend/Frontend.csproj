@@ -246,6 +246,8 @@
     <Content Include="Views\Blog\AddPost.cshtml" />
     <Content Include="Views\Blog\AddComment.cshtml" />
     <Content Include="Views\Blog\AddCommentPost.cshtml" />
+    <Content Include="Views\Shared\PermissionError.cshtml" />
+    <Content Include="Views\Blog\LogoutPost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

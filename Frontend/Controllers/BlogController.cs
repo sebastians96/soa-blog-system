@@ -57,13 +57,16 @@ namespace Frontend.Controllers
             }
             else
             {
-                return View("Error");
+                return View("PermissionError");
             }
         }
 
         public ActionResult AddComment(int id)
         {
-            ViewBag.postID = id;
+            var cookie = new HttpCookie("postID");
+            cookie["id"] = id.ToString();
+            cookie.Expires = DateTime.Now.AddHours(1);
+            Response.Cookies.Add(cookie);
             return View();
         }
 
@@ -110,7 +113,7 @@ namespace Frontend.Controllers
                 return View();
             } else
             {
-                return View("Error");
+                return View("PermissionError");
             }
             
         }
@@ -119,20 +122,48 @@ namespace Frontend.Controllers
         public async Task<ActionResult> AddCommentPost(Comment comment)
         {
             var cookie = Request.Cookies["Login"];
-            if (cookie != null && cookie["status"].Contains("user"))
+            var idCookie = Request.Cookies["postID"];
+            if (cookie != null)
             {
-                comment.User = cookie["username"];
-                var status = await _blogService.AddComment(commentWCFChanger(comment));
-                if (status.Equals("Error"))
+                if (idCookie != null)
+                {
+                    comment.User = cookie["username"];
+                    comment.PostID = int.Parse(idCookie["id"]);
+
+                    var c = new HttpCookie("postID");
+                    c.Expires = DateTime.Now.AddDays(-1);
+                    Response.Cookies.Add(c);
+
+                    var status = await _blogService.AddComment(commentWCFChanger(comment));
+                    if (status.Equals("Error"))
+                    {
+                        return View("Error");
+                    }
+                    return View("Index");
+                } else
                 {
                     return View("Error");
                 }
-                return View();
             }
             else
             {
+                return View("PermissionError");
+            }
+        }
+
+        public ActionResult Logout()
+        {
+            if(Request.Cookies["Login"] != null)
+            {
+                var c = new HttpCookie("Login");
+                c.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Add(c);
+                return View("LogoutPost");
+            } else
+            {
                 return View("Error");
             }
+            
         }
 
         private HttpCookie CreateLoginCookie(User user, JObject json)
