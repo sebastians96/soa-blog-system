@@ -139,7 +139,7 @@ namespace Frontend.Controllers
                     {
                         return View("Error");
                     }
-                    return View("Index");
+                    return View();
                 } else
                 {
                     return View("Error");
